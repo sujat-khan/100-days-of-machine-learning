@@ -46,6 +46,19 @@ Ensemble learning with `BaggingClassifier` (or `BaggingRegressor`) allows sampli
 
 ---
 
+## 3. Out-of-Bag (OOB) Evaluation
+
+When using Bagging (sampling *with replacement*), some instances in the dataset may be sampled multiple times for a given base estimator, while others may not be sampled at all. 
+
+Mathematically, as the dataset size grows, the probability that a specific instance is **not** picked in a single bootstrap sample approaches **$1/e \approx 36.8\%$**. These unsampled instances are called **Out-of-Bag (OOB) samples**.
+
+### Why is OOB Score Useful?
+Since a base estimator never sees its OOB samples during training, these samples can act as a **built-in validation set**. You don't need to split your training data into a separate validation set (saving data).
+
+In `scikit-learn`, setting `oob_score=True` in `BaggingClassifier` or `BaggingRegressor` will automatically evaluate each base estimator on its OOB samples and average the results to provide an overall validation score (accessible via the `.oob_score_` attribute after fitting).
+
+---
+
 ## Code Examples (`scikit-learn`)
 
 ```python
